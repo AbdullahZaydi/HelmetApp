@@ -66,13 +66,10 @@ public class NotificationService extends Service {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String response = snapshot.getValue(String.class);
                 if(response.equals("Accident Detected")) {
-                    Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                    // Vibrate for 500 milliseconds
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        v.vibrate(VibrationEffect.createOneShot(10000, VibrationEffect.DEFAULT_AMPLITUDE));
+                    if (Build.VERSION.SDK_INT >= 26) {
+                        ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(VibrationEffect.createOneShot(10000, VibrationEffect.DEFAULT_AMPLITUDE));
                     } else {
-                        //deprecated in API 26
-                        v.vibrate(10000);
+                        ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(10000);
                     }
                 }
 

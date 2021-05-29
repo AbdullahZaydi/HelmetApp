@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.zayditech.helmetapp"
-        minSdkVersion 29
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -36,8 +36,12 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.google.firebase:firebase-auth:20.0.2'
     implementation 'com.google.firebase:firebase-database:19.7.0'
+    implementation 'com.google.firebase:firebase-storage:20.0.0'
     testImplementation 'junit:junit:4.+'
+    implementation 'com.github.dhaval2404:imagepicker:2.1'
+    implementation 'com.mikhaellopez:circularimageview:3.2.0'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.22'
+    implementation 'com.github.SMehranB:GlowButton:2.0.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
