@@ -40,6 +40,7 @@ public class HomeActivity extends AppCompatActivity {
     TextView bpDiasystolicTxt;
     TextView name;
     TextView temperature;
+    TextView datetime;
     TextView heartbeat;
     Intent mServiceIntent;
     CircularImageView imageView;
@@ -70,6 +71,7 @@ public class HomeActivity extends AppCompatActivity {
         bpSistolic = findViewById(R.id.bpSistolicTxt);
         bpDiasystolicTxt = findViewById(R.id.bpDiasystolicTxt);
         temperature = findViewById(R.id.tempTxt);
+        datetime = findViewById(R.id.datetime);
         heartbeat = findViewById(R.id.hbTxt);
 
         StorageReference fileRef = storageReference.child("images/" + currentFirebaseUser.getUid());
@@ -101,7 +103,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String response = snapshot.getValue(String.class);
-                bpSistolic.setText(response);
+                bpSistolic.setText(response + " 'S");
             }
 
             @Override
@@ -116,7 +118,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String response = snapshot.getValue(String.class);
-                bpDiasystolicTxt.setText(response);
+                bpDiasystolicTxt.setText(response+ " 'D");
             }
 
             @Override
@@ -131,7 +133,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String response = snapshot.getValue(String.class);
-                heartbeat.setText(response);
+                heartbeat.setText(response+ " 'P");
             }
 
             @Override
@@ -146,7 +148,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String response = snapshot.getValue(String.class);
-                temperature.setText(response);
+                temperature.setText(response + " 'T");
             }
 
             @Override
@@ -155,6 +157,32 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        // For DateTime
+        ref = database.getReference("Date and Time").child("Date");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String date = snapshot.getValue(String.class);
+                ref = database.getReference("Date and Time").child("Time");
+                ref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String time = snapshot.getValue(String.class);
+                        datetime.setText("Last Accident Details: " + date + " " + time);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {
